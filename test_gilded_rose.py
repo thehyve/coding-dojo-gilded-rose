@@ -9,7 +9,21 @@ class GildedRoseTest(unittest.TestCase):
         items = [Item("foo", 0, 0)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
-        self.assertEqual("foo", items[0].name)
+        self.assertEqual(items[0].name, "foo")
+
+    def test_no_negative_quality(self):
+        "Check that item doesnt get negative quality"
+        items = [Item("foo", 0, 0)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertGreaterEqual(items[0].quality, 0)
+
+    def test_decreasing_quality(self):
+        "Check that quality decreases"
+        items = [Item("foo", 0, 1)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertLess(items[0].quality, 1)
 
 if __name__ == '__main__':
     unittest.main()
