@@ -25,5 +25,19 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertLess(items[0].quality, 1)
 
+    def test_decreasing_sell_in(self):
+        "Check that sell in decreases"
+        items = [Item("foo", 1, 0)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertLess(items[0].sell_in, 1)
+
+    def test_sell_in_is_negative(self):
+        "Check that sell in negative"
+        items = [Item("foo", 0, 0)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertLess(items[0].sell_in, 0)
+
 if __name__ == '__main__':
     unittest.main()
