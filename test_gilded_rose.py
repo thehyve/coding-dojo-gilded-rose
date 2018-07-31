@@ -45,6 +45,14 @@ class GildedRoseTest(unittest.TestCase):
         factor = GildedRose.get_degrade_factor(item)
         self.assertEqual(factor, 1)
 
+    @unittest.skip('do later')
+    def test_conjured_option_exist(self):
+        """Check if a conjured item can be added"""
+        items = [Item("foo", 0, 0)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertLess(items[0].sell_in, 0)
+
 class GildedRoseApprovalTest(unittest.TestCase):
     "Test functionality on a mixed set of items"
 
