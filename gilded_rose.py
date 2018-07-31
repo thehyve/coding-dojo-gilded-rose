@@ -5,6 +5,10 @@ class GildedRose(object):
     def __init__(self, items):
         self.items = items
 
+    @staticmethod
+    def get_degrade_factor(item):
+        return 1
+
     def update_quality(self):
         for item in self.items:
             if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert":

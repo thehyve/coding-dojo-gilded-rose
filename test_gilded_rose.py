@@ -39,6 +39,12 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertLess(items[0].sell_in, 0)
 
+    def test_normal_item_degrade_factor_before_sellby(self):
+        "Degrade factor should be 1 before sell by date passes"
+        item = Item("foo", 1, 0)
+        factor = GildedRose.get_degrade_factor(item)
+        self.assertEqual(factor, 1)
+
 class GildedRoseApprovalTest(unittest.TestCase):
     "Test functionality on a mixed set of items"
 
