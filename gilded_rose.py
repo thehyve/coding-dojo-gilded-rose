@@ -9,6 +9,10 @@ class GildedRose(object):
         if item.quality > 0:
             item.quality -= GildedRose.get_degrade_factor(item)
 
+    def _increase_quality(self, item):
+        if item.quality < 50:
+            item.quality += 1
+
     @staticmethod
     def get_degrade_factor(item):
         return 1
@@ -20,15 +24,12 @@ class GildedRose(object):
             if degrades_with_normal_rate:
                 self._decrease_quality(item)
             else:
-                if item.quality < 50:
-                    item.quality = item.quality + 1
-                    if item.name == "Backstage passes to a TAFKAL80ETC concert":
-                        if item.sell_in < 11:
-                            if item.quality < 50:
-                                item.quality = item.quality + 1
-                        if item.sell_in < 6:
-                            if item.quality < 50:
-                                item.quality = item.quality + 1
+                self._increase_quality(item)
+                if item.name == "Backstage passes to a TAFKAL80ETC concert":
+                    if item.sell_in < 11:
+                        self._increase_quality(item)
+                    if item.sell_in < 6:
+                        self._increase_quality(item)
             if item.name != "Sulfuras, Hand of Ragnaros":
                 item.sell_in = item.sell_in - 1
             if item.sell_in < 0:
@@ -40,8 +41,7 @@ class GildedRose(object):
                     else:
                         item.quality = item.quality - item.quality
                 else:
-                    if item.quality < 50:
-                        item.quality = item.quality + 1
+                    self._increase_quality(item)
 
 
 class Item:
