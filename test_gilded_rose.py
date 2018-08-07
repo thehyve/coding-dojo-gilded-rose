@@ -3,7 +3,8 @@ import unittest
 
 from gilded_rose import Item, GildedRose
 
-class GildedRoseTest(unittest.TestCase):
+
+class UpdateQualityTestCase(unittest.TestCase):
     def test_foo(self):
         "Check if item foo is still in items after update quality"
         items = [Item("foo", 0, 0)]
@@ -39,18 +40,6 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertLess(items[0].sell_in, 0)
 
-    def test_normal_item_degrade_factor_before_sellby(self):
-        "Degrade factor should be 1 before sell by date passes"
-        item = Item("foo", 1, 0)
-        factor = GildedRose.get_degrade_factor(item)
-        self.assertEqual(factor, 1)
-
-    def test_exception_item_degrade_factor(self):
-        "Degrade factor should be negative before sell by date passes"
-        item = Item("foo", 1, 0)
-        factor = GildedRose.get_degrade_factor(item)
-        self.assertEqual(factor, 1)
-
     def test_quality_never_more_than_50(self):
         "Quality stays 50"
         items = [Item("Backstage passes to a TAFKAL80ETC concert", 30, 50)]
@@ -79,6 +68,21 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertLess(items[0].sell_in, 0)
+
+
+class DegradeFactorTestcase(unittest.TestCase):
+    def test_normal_item_degrade_factor_before_sellby(self):
+        "Degrade factor should be 1 before sell by date passes"
+        item = Item("foo", 1, 0)
+        factor = GildedRose.get_degrade_factor(item)
+        self.assertEqual(factor, 1)
+
+    def test_exception_item_degrade_factor(self):
+        "Degrade factor should be negative before sell by date passes"
+        item = Item("foo", 1, 0)
+        factor = GildedRose.get_degrade_factor(item)
+        self.assertEqual(factor, 1)
+
 
 class GildedRoseApprovalTest(unittest.TestCase):
     "Test functionality on a mixed set of items"
