@@ -6,9 +6,8 @@ class GildedRose(object):
         self.items = items
 
     def _decrease_quality(self, item):
-        if item.name not in {"Aged Brie", "Backstage passes to a TAFKAL80ETC concert",
-                            "Sulfuras, Hand of Ragnaros"} and item.quality > 0:
-                item.quality -= 1
+        if item.quality > 0:
+            item.quality -= GildedRose.get_degrade_factor(item)
 
     @staticmethod
     def get_degrade_factor(item):
