@@ -51,6 +51,27 @@ class GildedRoseTest(unittest.TestCase):
         factor = GildedRose.get_degrade_factor(item)
         self.assertEqual(factor, 1)
 
+    def test_quality_never_more_than_50(self):
+        "Quality stays 50"
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 30, 50)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(items[0].quality, 50)
+
+    def test_quality_increase_by_2(self):
+        "Quality += 2"
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 10, 40)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(items[0].quality, 42)
+
+    def test_quality_increase_by_3(self):
+        "Quality += 3"
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 5, 39)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(items[0].quality, 42)
+
     @unittest.skip('do later')
     def test_conjured_option_exist(self):
         """Check if a conjured item can be added"""
