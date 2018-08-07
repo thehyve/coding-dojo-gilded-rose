@@ -5,6 +5,8 @@ from gilded_rose import Item, GildedRose
 
 
 class UpdateQualityTestCase(unittest.TestCase):
+    "Tests for GildedRose().update_quality()"
+
     def test_foo(self):
         "Check if item foo is still in items after update quality"
         items = [Item("foo", 0, 0)]
@@ -12,12 +14,12 @@ class UpdateQualityTestCase(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(items[0].name, "foo")
 
-    def test_no_negative_quality(self):
-        "Check that item doesnt get negative quality"
-        items = [Item("foo", 0, 0)]
+    def test_decreasing_sell_in(self):
+        "Check that sell in decreases"
+        items = [Item("foo", 1, 0)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
-        self.assertGreaterEqual(items[0].quality, 0)
+        self.assertLess(items[0].sell_in, 1)
 
     def test_decreasing_quality(self):
         "Check that quality decreases"
@@ -26,12 +28,19 @@ class UpdateQualityTestCase(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertLess(items[0].quality, 1)
 
-    def test_decreasing_sell_in(self):
-        "Check that sell in decreases"
-        items = [Item("foo", 1, 0)]
+    def test_decreasing_quality_when_sellby_date_passed(self):
+        "Check that quality decreases faster after the sell-by date"
+        items = [Item("foo", sell_in=-1, quality=10)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
-        self.assertLess(items[0].sell_in, 1)
+        self.assertEquals(items[0].quality, 8)
+
+    def test_no_negative_quality(self):
+        "Check that item doesnt get negative quality"
+        items = [Item("foo", 0, 0)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertGreaterEqual(items[0].quality, 0)
 
     def test_sell_in_is_negative(self):
         "Check that sell in negative"
