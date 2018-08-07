@@ -45,6 +45,12 @@ class GildedRoseTest(unittest.TestCase):
         factor = GildedRose.get_degrade_factor(item)
         self.assertEqual(factor, 1)
 
+    def test_exception_item_degrade_factor(self):
+        "Degrade factor should be negative before sell by date passes"
+        item = Item("foo", 1, 0)
+        factor = GildedRose.get_degrade_factor(item)
+        self.assertEqual(factor, 1)
+
     @unittest.skip('do later')
     def test_conjured_option_exist(self):
         """Check if a conjured item can be added"""
@@ -90,6 +96,7 @@ class GildedRoseApprovalTest(unittest.TestCase):
             [repr(item) for item in gilded_rose.items],
             [repr(item) for item in items_expected])
 
+        # also when?
         gilded_rose.update_quality()
 
         items_expected = [
