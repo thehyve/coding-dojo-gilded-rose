@@ -17,11 +17,11 @@ class GildedRose(object):
     def get_degrade_factor(item):
         return 1
 
-    def update_quality(self):
+    def update_items(self):
         for item in self.items:
-            degrades_with_normal_rate = item.name not in {"Aged Brie", "Backstage passes to a TAFKAL80ETC concert",
+            degrades_with_time = item.name not in {"Aged Brie", "Backstage passes to a TAFKAL80ETC concert",
                                                           "Sulfuras, Hand of Ragnaros"}
-            if degrades_with_normal_rate:
+            if degrades_with_time:
                 self._decrease_quality(item)
             else:
                 self._increase_quality(item)

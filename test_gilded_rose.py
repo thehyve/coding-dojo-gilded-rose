@@ -11,63 +11,63 @@ class UpdateQualityTestCase(unittest.TestCase):
         "Check if item foo is still in items after update quality"
         items = [Item("foo", 0, 0)]
         gilded_rose = GildedRose(items)
-        gilded_rose.update_quality()
+        gilded_rose.update_items()
         self.assertEqual(items[0].name, "foo")
 
     def test_decreasing_sell_in(self):
         "Check that sell in decreases"
         items = [Item("foo", 1, 0)]
         gilded_rose = GildedRose(items)
-        gilded_rose.update_quality()
+        gilded_rose.update_items()
         self.assertLess(items[0].sell_in, 1)
 
     def test_decreasing_quality(self):
         "Check that quality decreases"
         items = [Item("foo", 0, 1)]
         gilded_rose = GildedRose(items)
-        gilded_rose.update_quality()
+        gilded_rose.update_items()
         self.assertLess(items[0].quality, 1)
 
     def test_decreasing_quality_when_sellby_date_passed(self):
         "Check that quality decreases faster after the sell-by date"
         items = [Item("foo", sell_in=-1, quality=10)]
         gilded_rose = GildedRose(items)
-        gilded_rose.update_quality()
+        gilded_rose.update_items()
         self.assertEquals(items[0].quality, 8)
 
     def test_no_negative_quality(self):
         "Check that item doesnt get negative quality"
         items = [Item("foo", 0, 0)]
         gilded_rose = GildedRose(items)
-        gilded_rose.update_quality()
+        gilded_rose.update_items()
         self.assertGreaterEqual(items[0].quality, 0)
 
     def test_sell_in_is_negative(self):
         "Check that sell in negative"
         items = [Item("foo", 0, 0)]
         gilded_rose = GildedRose(items)
-        gilded_rose.update_quality()
+        gilded_rose.update_items()
         self.assertLess(items[0].sell_in, 0)
 
     def test_quality_never_more_than_50(self):
         "Quality stays 50"
         items = [Item("Backstage passes to a TAFKAL80ETC concert", 30, 50)]
         gilded_rose = GildedRose(items)
-        gilded_rose.update_quality()
+        gilded_rose.update_items()
         self.assertEqual(items[0].quality, 50)
 
     def test_quality_increase_by_2(self):
         "Quality += 2"
         items = [Item("Backstage passes to a TAFKAL80ETC concert", 10, 40)]
         gilded_rose = GildedRose(items)
-        gilded_rose.update_quality()
+        gilded_rose.update_items()
         self.assertEqual(items[0].quality, 42)
 
     def test_quality_increase_by_3(self):
         "Quality += 3"
         items = [Item("Backstage passes to a TAFKAL80ETC concert", 5, 39)]
         gilded_rose = GildedRose(items)
-        gilded_rose.update_quality()
+        gilded_rose.update_items()
         self.assertEqual(items[0].quality, 42)
 
     @unittest.skip('do later')
@@ -75,7 +75,7 @@ class UpdateQualityTestCase(unittest.TestCase):
         """Check if a conjured item can be added"""
         items = [Item("foo", 0, 0)]
         gilded_rose = GildedRose(items)
-        gilded_rose.update_quality()
+        gilded_rose.update_items()
         self.assertLess(items[0].sell_in, 0)
 
 
@@ -112,7 +112,7 @@ class GildedRoseApprovalTest(unittest.TestCase):
         ]
         gilded_rose = GildedRose(items)
         # when
-        gilded_rose.update_quality()
+        gilded_rose.update_items()
         # then
         items_expected = [
             Item(name="+5 Dexterity Vest", sell_in=9, quality=19),
@@ -131,7 +131,7 @@ class GildedRoseApprovalTest(unittest.TestCase):
             [repr(item) for item in items_expected])
 
         # also when?
-        gilded_rose.update_quality()
+        gilded_rose.update_items()
 
         items_expected = [
             Item(name="+5 Dexterity Vest", sell_in=8, quality=18),
