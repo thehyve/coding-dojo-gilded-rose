@@ -9,30 +9,38 @@ class GildedRose(object):
     def _update_quality(item):
         """Update the item quality without exceeding boundaries."""
         factor = GildedRose.get_degrade_factor(item)
-        item.quality += factor
+        item.quality -= factor
         if item.quality < 0:
             item.quality = 0
-        if item.quality > 50:
+        if item.quality > 50 and item.name != "Sulfuras, Hand of Ragnaros":
             item.quality = 50
 
     @staticmethod
     def get_degrade_factor(item):
         """Return number by which the item degrades."""
         def backstage_pass_degrade_factor(item):
-            if item.sell_in < 6:
+            if item.sell_in < 0:
+                return item.quality
+            elif item.sell_in < 6:
                 return -3
             elif item.sell_in < 11:
                 return -2
             else:
                 return -1
 
+        def aged_brie_degrade_factor(item):
+            return -2 if item.sell_in < 0 else -1
+
+        def regular_item_degrade_factor(item):
+            return 2 if item.sell_in < 0 else 1
+
         item_degrade = {
-            "Aged Brie": lambda __: -1,
+            "Aged Brie": aged_brie_degrade_factor,
             "Backstage passes to a TAFKAL80ETC concert": backstage_pass_degrade_factor,
             "Sulfuras, Hand of Ragnaros": lambda __: 0
         }
 
-        degrade_fun = item_degrade.get(item.name, lambda __: 1)
+        degrade_fun = item_degrade.get(item.name, regular_item_degrade_factor)
         return degrade_fun(item)
 
     def update_items(self):
