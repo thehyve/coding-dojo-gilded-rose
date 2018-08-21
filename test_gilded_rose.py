@@ -63,6 +63,13 @@ class UpdateQualityTestCase(unittest.TestCase):
         gilded_rose.update_items()
         self.assertEqual(items[0].quality, 12)
 
+    def test_brie_quality_increase_by_1_before_sell_in(self):
+        """Aged Brie quality += 1"""
+        items = [Item("Aged Brie", sell_in=20, quality=10)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_items()
+        self.assertEqual(items[0].quality, 11)
+
     def test_quality_increase_by_2(self):
         "Quality += 2"
         items = [Item("Backstage passes to a TAFKAL80ETC concert", 10, 40)]
