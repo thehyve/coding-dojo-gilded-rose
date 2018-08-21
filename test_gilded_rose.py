@@ -70,6 +70,16 @@ class UpdateQualityTestCase(unittest.TestCase):
         gilded_rose.update_items()
         self.assertEqual(items[0].quality, 42)
 
+    def test_backstage_pass_past_concert(self):
+        "Check if a backstage pass has 0 quality after the concert."
+        items = [Item(
+            "Backstage passes to a TAFKAL80ETC concert",
+            sell_in=-1,
+            quality=3)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_items()
+        self.assertEqual(items[0].quality, 0)
+
     @unittest.skip('do later')
     def test_conjured_option_exist(self):
         """Check if a conjured item can be added"""
