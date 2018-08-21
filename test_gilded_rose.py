@@ -33,7 +33,7 @@ class UpdateQualityTestCase(unittest.TestCase):
         items = [Item("foo", sell_in=-1, quality=10)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_items()
-        self.assertEquals(items[0].quality, 8)
+        self.assertEqual(items[0].quality, 8)
 
     def test_no_negative_quality(self):
         "Check that item doesnt get negative quality"
@@ -55,6 +55,13 @@ class UpdateQualityTestCase(unittest.TestCase):
         gilded_rose = GildedRose(items)
         gilded_rose.update_items()
         self.assertEqual(items[0].quality, 50)
+
+    def test_brie_quality_increase_by_2_after_sell_in(self):
+        """Aged Brie quality += 2"""
+        items = [Item("Aged Brie", sell_in=-20, quality=10)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_items()
+        self.assertEqual(items[0].quality, 12)
 
     def test_quality_increase_by_2(self):
         "Quality += 2"
