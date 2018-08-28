@@ -31,7 +31,7 @@ class GildedRose(object):
         def aged_brie_degrade_factor(item):
             return -2 if item.sell_in < 0 else -1
 
-        def regular_item_degrade_factor(item):
+        def default_item_degrade_factor(item):
             factor = 2 if item.sell_in < 0 else 1
             if "conjured" in item.name.lower():
                 factor *= 2
@@ -43,7 +43,7 @@ class GildedRose(object):
             "Sulfuras, Hand of Ragnaros": lambda __: 0
         }
 
-        degrade_fun = item_degrade.get(item.name, regular_item_degrade_factor)
+        degrade_fun = item_degrade.get(item.name, default_item_degrade_factor)
         return degrade_fun(item)
 
     def update_items(self):
