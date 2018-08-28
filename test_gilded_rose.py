@@ -102,6 +102,17 @@ class UpdateQualityTestCase(unittest.TestCase):
         gilded_rose.update_items()
         self.assertLess(items[0].sell_in, 0)
 
+    def test_conjured_item_degrades_twice_as_fast(self):
+        """Check conjured item degrades by 2"""
+        items = [Item(
+            "Conjured foo",
+            sell_in=5,
+            quality=5)
+            ]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_items()
+        self.assertEqual(items[0].quality, 3)
+
 
 class DegradeFactorTestcase(unittest.TestCase):
     def test_normal_item_degrade_factor_before_sellby(self):
