@@ -158,7 +158,7 @@ class GildedRoseApprovalTest(unittest.TestCase):
             Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=14, quality=21),
             Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=9, quality=50),
             Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=4, quality=50),
-            Item(name="Conjured Mana Cake", sell_in=2, quality=5),  # <-- :O
+            Item(name="Conjured Mana Cake", sell_in=2, quality=4),  # <-- :O
         ]
 
         self.assertListEqual(
@@ -177,7 +177,7 @@ class GildedRoseApprovalTest(unittest.TestCase):
             Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=13, quality=22),
             Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=8, quality=50),
             Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=3, quality=50),
-            Item(name="Conjured Mana Cake", sell_in=1, quality=4),  # <-- :O
+            Item(name="Conjured Mana Cake", sell_in=1, quality=2),  # <-- :O
         ]
 
         self.assertListEqual(

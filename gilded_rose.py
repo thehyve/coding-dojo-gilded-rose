@@ -32,7 +32,10 @@ class GildedRose(object):
             return -2 if item.sell_in < 0 else -1
 
         def regular_item_degrade_factor(item):
-            return 2 if item.sell_in < 0 else 1
+            factor = 2 if item.sell_in < 0 else 1
+            if "conjured" in item.name.lower():
+                factor *= 2
+            return factor
 
         item_degrade = {
             "Aged Brie": aged_brie_degrade_factor,
